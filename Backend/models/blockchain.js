@@ -19,3 +19,15 @@ class Transaction {
 }
 
 
+class Block {
+    constructor(id) {
+        this.id = id;
+        this.transaction = []
+    }
+
+    addTransaction(tx) {
+        this.transactions.push(tx);
+    }
+}
+
+
