@@ -260,7 +260,8 @@ flowchart TD
     G1 -.-> Z
     G2 -.-> Z
 
-    
+```
+
 ## How It Works
 
 ### createTransaction
