@@ -218,37 +218,49 @@ Frontend communicates with the backend API through `src/api/blockchain.api.js`.
 
 ## In-depth architecture
 
+```mermaid
 flowchart TD
 
-A[React Frontend] -->|HTTP Request| B[Express Routes]
+    %% Entry Point
+    A[React Frontend Interface] -->|HTTP Request| B[Server Infrastructure]
 
-B --> C1[GET transactions]
-B --> C2[POST transactions]
+    %% API Routing
+    subgraph API_Layer [API Layer]
+        B --> C1[GET /transactions]
+        B --> C2[POST /transactions]
+    end
 
-C1 --> D1[getTransactions]
-C2 --> D2[createTransaction]
+    %% Read Operations
+    subgraph Read_Process [Read Logic]
+        C1 --> D1[getTransactions]
+        D1 --> E1[Load JSON Storage]
+        E1 --> F1[Rehydrate Blocks]
+        F1 --> G1[Rehydrate Transactions]
+        G1 --> H1[Apply Filters]
+        H1 --> I1[Return Response]
+    end
 
-D1 --> E1[Load JSON]
-E1 --> F1[Rehydrate Blocks]
-F1 --> G1[Rehydrate Transactions]
-G1 --> H1[Apply Filters]
-H1 --> I1[Return Response]
+    %% Write Operations
+    subgraph Write_Process [Write Logic]
+        C2 --> D2[createTransaction]
+        D2 --> E2[Load JSON Storage]
+        E2 --> F2[Find or Create Block]
+        F2 --> G2[Create Transaction]
+        G2 --> H2[Add to Block]
+        H2 --> I2[Save JSON Storage]
+    end
 
-D2 --> E2[Load JSON]
-E2 --> F2[Find or Create Block]
-F2 --> G2[Create Transaction]
-G2 --> H2[Add to Block]
-H2 --> I2[Save JSON]
+    %% Data Model
+    subgraph Blockchain_Model [Data Hierarchy]
+        X[Blockchain] --> Y[Block]
+        Y --> Z[Transaction]
+    end
 
-subgraph Blockchain_Model
-    X[Blockchain]
-    Y[Block]
-    Z[Transaction]
+    %% Logical Links
+    G1 -.-> Z
+    G2 -.-> Z
 
-    X --> Y
-    Y --> Z
-end
-
+    
 ## How It Works
 
 ### createTransaction
