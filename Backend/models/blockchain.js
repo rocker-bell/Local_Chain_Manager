@@ -31,3 +31,21 @@ class Block {
 }
 
 
+class BlockChain {
+    constructor() {
+        this.chain = [];
+    }
+
+    addBlock(block) {
+        this.chain.push(block);
+    }
+
+    addTransactionToBlock(blockId, tx) {
+        const block = this.chain.find(b => b.id === blockId);
+        if(!block) {
+            throw new Error("Block not found");
+        }
+
+        block.addTransaction(tx);
+    }
+}
