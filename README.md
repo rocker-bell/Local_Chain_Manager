@@ -299,8 +299,7 @@ Includes:
 - amounts  
 - dates  
 - status  
-- txHash  
-
+- txHash 
 
 
 ## Persistence
@@ -308,6 +307,30 @@ Includes:
 - `load()` → used in **GET** and **POST**  
 - `save()` → used in **POST**  
 - `clear()` → used in **DELETE**  
+
+## Technologies Used
+
+- **Frontend:** React (Vite) for building the user interface  
+- **Backend:** Node.js with Express for API handling  
+- **State Management:** React Hooks (`useState`, `useEffect`)  
+- **Styling:** Custom CSS  
+- **Blockchain Interaction:** Ethers.js (for MetaMask & Sepolia testnet)  
+- **Persistence:** File system (`fs`) with JSON storage (`blockchain.json`)  
+- **API Communication:** Fetch API  
+- **Development Tools:** Vite (fast dev server & proxy), Nodemon (optional)  
+
+---
+
+## Third-Party Tools & Disclaimer
+
+This project may interact with or reference third-party tools and services such as:
+
+- **MetaMask** (wallet provider)  
+- **Ethereum Sepolia Testnet** (blockchain network)  
+- **Ethers.js** (library for blockchain interaction)  
+
+These tools are used strictly for development and educational purposes.
+
 
 ---
 
@@ -321,7 +344,9 @@ Only the owner (rocker_bell) or explicitly designated parties may use, copy, mod
 
 Any unauthorized use, reproduction, modification, or distribution by others is strictly prohibited.
 
-Note
-->This project and repository are actively maintained and regularly updated.
+> **Disclaimer**  
+> All third-party names, trademarks, and services (e.g., MetaMask, Ethereum) are the property of their respective owners.  
+> This project is not affiliated with, endorsed by, or officially connected to any of these entities.
+> This project and repository are actively maintained and regularly updated.
 
 
