@@ -1,3 +1,5 @@
+
+
 const STATUS = {
     pending: "PENDING",
     success: "CONFIRMED",
@@ -40,6 +42,8 @@ class BlockChain {
 
     addBlock(block) {
         this.chain.push(block);
+
+
     }
 
     addTransactionToBlock(blockId, tx) {
