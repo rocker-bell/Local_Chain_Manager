@@ -23,9 +23,9 @@ export default function SearchResults({ Filters }) {
             <td>{tx.maxAmount}</td>
             <td>{tx.startDate}</td>
             <td>{tx.endDate}</td>
-            <td className={`status status-${tx.Status?.toLowerCase()}`}>
-                {tx.Status}
-            </td>
+           <td className={`status status-${tx.status?.toLowerCase()}`}>
+    {tx.status}
+</td>
           </tr>
         ))}
       </tbody>

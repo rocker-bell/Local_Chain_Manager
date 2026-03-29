@@ -1,28 +1,27 @@
 import express from 'express';
-import {blockchain} from '../blockchain.js';
+import { blockchain } from '../models/blockchain.js';
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
     try {
-        const data = blockchain.getTransactions(req,query);
-        res.json(data);
-    }
-    catch(err) {
-        res.status(500).json({error: err.message});
+        const filters = req.query;
+        const data = blockchain.getTransactions(filters);
+        res.json({ success: true, data });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
-router.post('/', (req,res) => {
+router.post('/', (req, res) => {
     try {
-        const { blockId, ...txData} = req.body;
-
+        const { blockId, ...txData } = req.body;
+        if (!blockId) throw new Error('blockId required');
         const tx = blockchain.createTransaction(Number(blockId), txData);
-
-        res.status(201).json(tx);
+        res.status(201).json({ success: true, data: tx });
+    } catch (err) {
+        res.status(400).json({ success: false, message: err.message });
     }
+});
 
-    catch(err) {
-        res.status(400).json({error: err.message})
-    }
-})
+export default router;

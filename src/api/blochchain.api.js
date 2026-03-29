@@ -1,6 +1,6 @@
 export const fetchTransactions = async (filters = {}) => {
     const query = new URLSearchParams(filters).toString();
-    const res = await fetch(`/api/transactions?$(query)`);
+    const res = await fetch(`/api/transactions?${query}`);
     const data = await res.json();
     if (!data.success) throw new Error(data.message);
     return data.data;

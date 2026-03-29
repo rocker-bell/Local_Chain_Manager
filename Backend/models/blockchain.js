@@ -1,11 +1,11 @@
 const STATUS = {
-    panding: "PENDING",
+    pending: "PENDING",
     success: "CONFIRMED",
     cancelled: "CANCELLED"
 }
 
 class Transaction {
-    constructor(id, fromAddress, toAddress, minAmount, maxAmount, startDate, endDate, status) {
+    constructor(id, fromAddress, toAddress, minAmount, maxAmount, startDate, endDate, status = STATUS.pending , txHash = null) {
         this.id = id;
         this.fromAddress = fromAddress;
         this.toAddress = toAddress;
@@ -13,11 +13,9 @@ class Transaction {
         this.maxAmount = maxAmount;
         this.startDate = startDate;
         this.endDate = endDate;
-        txHash = null
-
-
+        
         this.status = status;
-        this.txHash = this.txHash
+        this.txHash = txHash
     }
 
 }
@@ -63,10 +61,12 @@ class BlockChain {
             if(minAmount && tx.maxAmount < Number(minAmount)) return false;
             if(maxAmount && tx.minAmount > Number(maxAmount)) return false;
 
-            if(startDate && tx.startDate < Number(startDate)) return false;
-            if(endDate && tx.endDate > Number(endDate)) return false;
+            // if(startDate && tx.startDate < Number(startDate)) return false;
+            // if(endDate && tx.endDate > Number(endDate)) return false;
+            if (startDate && new Date(tx.startDate) < new Date(startDate)) return false
+            if (endDate && new Date(tx.endDate) > new Date(endDate)) return false;
 
-            if (status && tx.Status !== STATUS[status]) return false;
+            if (status && tx.status !== STATUS[status]) return false;
 
             return true;
         })

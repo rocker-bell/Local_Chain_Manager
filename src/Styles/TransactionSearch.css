@@ -1,0 +1,71 @@
+.form_wrapper {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_wrapper.Active {
+    display: flex;
+}
+
+/* Modal Content */
+.Searchform_element {
+    background: #ffffff;
+    width: 100%;
+    max-width: 500px;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form_label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 6px;
+}
+
+.form_control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.form_control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Button Group inside Modal */
+.TransactionSearch_btnGroupe {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.search-icon {
+    padding: 5px 5px;
+    /* border: 4px dashed black; */
+    background-color: #3b82f6;
+    border-radius: 50px;
+    border: none;
+    
+}

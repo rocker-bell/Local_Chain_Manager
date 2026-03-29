@@ -1,7 +1,7 @@
 import "../Styles/TransactionSearch.css"
 import {useState, useEffect} from "react";
 import { fetchTransactions } from "../api/blochchain.api";
-export default function TransactionSearch () {
+export default function TransactionSearch ({onResults}) {
      const [QuerryActive, setQerryActive] = useState(false);
     const [Loading, setLoading] = useState(false);
 
@@ -168,10 +168,10 @@ export default function TransactionSearch () {
                                 value={FormData.status}
                                 onChange={onChange}
                             >
-                                <option value="">Select status</option>
-                                <option value="pending">Pending</option>
-                                <option value="confirmed">Confirmed</option>
-                                <option value="cancelled">Cancelled</option>
+                              <option value="">Select status</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="success">Confirmed</option>  
+                                    <option value="cancelled">Cancelled</option>
                             </select>
                         </div>
 
