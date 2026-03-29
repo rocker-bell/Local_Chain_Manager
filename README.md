@@ -220,83 +220,50 @@ Frontend communicates with the backend API through `src/api/blockchain.api.js`.
 
 flowchart TD
 
-%% =========================
 %% FRONTEND
-%% =========================
-A[React Frontend\nTransactionSearch / BlockchainTransaction] 
-    -->|HTTP Request| B[Express Routes]
+A[React Frontend] -->|HTTP Request| B[Express Routes]
 
-%% =========================
-%% ROUTES → CONTROLLERS
-%% =========================
-B --> C1[GET /api/transactions]
-B --> C2[POST /api/transactions]
+%% ROUTES
+B --> C1[GET api transactions]
+B --> C2[POST api transactions]
 
 C1 --> D1[getTransactions Controller]
 C2 --> D2[createTransaction Controller]
 
-%% =========================
 %% GET FLOW
-%% =========================
-D1 --> E1[persistenceService.load()]
-E1 --> F1[Load blockchain.json]
-
+D1 --> E1[Load from persistence]
+E1 --> F1[Read blockchain.json]
 F1 --> G1[Rehydrate Blocks]
 G1 --> H1[Rehydrate Transactions]
-
 H1 --> I1[Apply Filters]
-I1 --> J1[Return Filtered Transactions]
+I1 --> J1[Return Data]
+J1 --> K1[sendSuccess Response]
+K1 --> A
 
-J1 --> K[sendSuccess Response]
-K --> A
-
-%% =========================
 %% POST FLOW
-%% =========================
-D2 --> E2[persistenceService.load()]
+D2 --> E2[Load from persistence]
 E2 --> F2[Find or Create Block]
+F2 --> G2[Create Transaction]
+G2 --> H2[Add to Block]
+H2 --> I2[Save to persistence]
+I2 --> J2[Write blockchain.json]
+J2 --> K2[sendSuccess Response]
+K2 --> A
 
-F2 --> G2[Create Transaction Object]
-G2 --> H2[Add Transaction to Block]
-
-H2 --> I2[persistenceService.save()]
-I2 --> J2[Write to blockchain.json]
-
-J2 --> K
-
-%% =========================
 %% BLOCKCHAIN STRUCTURE
-%% =========================
-subgraph Blockchain Model
+subgraph Blockchain_Model
     L[Blockchain]
     M[Block]
     N[Transaction]
 
-    L -->|contains| M
-    M -->|contains| N
+    L --> M
+    M --> N
 end
 
-%% =========================
-%% METHOD RELATIONSHIPS
-%% =========================
-D2 -->|uses| N
-D2 -->|updates| M
-
-D1 -->|reads| N
-D1 -->|filters| N
-
-%% =========================
-%% STATUS LOGIC
-%% =========================
-subgraph STATUS Mapping
-    S1[pending → PENDING]
-    S2[success → CONFIRMED]
-    S3[cancelled → CANCELLED]
-end
-
-I1 --> S1
-I1 --> S2
-I1 --> S3
+%% RELATIONSHIPS
+D2 --> N
+D2 --> M
+D1 --> N
 
 What this diagram shows (quick explanation)
 * createTransaction flow
