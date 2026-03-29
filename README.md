@@ -34,7 +34,7 @@ The Local Chain Manager allows you to:
 
 This is ideal for development, testing smart contract interactions, and experimenting with transaction management.
 
----
+
 
 ## Features
 
@@ -45,7 +45,7 @@ This is ideal for development, testing smart contract interactions, and experime
 * **Clear Blockchain** – Reset data with a single API call.
 * **Frontend Interface** – Search and display transactions in a table.
 
----
+
 
 ## Folder Structure
 
@@ -69,7 +69,7 @@ Local_Chain_Manager/
 └─ README.md
 ```
 
----
+
 
 ## Installation
 
@@ -101,7 +101,7 @@ npm run dev
 
 > Make sure you have Node.js v22+ installed.
 
----
+
 
 ## Usage
 
@@ -127,7 +127,7 @@ Available endpoints:
 
 Frontend communicates with the backend API through `src/api/blockchain.api.js`.
 
----
+
 
 ## API Endpoints
 
@@ -153,7 +153,7 @@ Frontend communicates with the backend API through `src/api/blockchain.api.js`.
 }
 ```
 
----
+
 
 ### POST `/api/transactions`
 
@@ -182,7 +182,7 @@ Frontend communicates with the backend API through `src/api/blockchain.api.js`.
 }
 ```
 
----
+
 
 ### DELETE `/api/transactions`
 
@@ -196,7 +196,7 @@ Frontend communicates with the backend API through `src/api/blockchain.api.js`.
 }
 ```
 
----
+
 
 ## Data Persistence
 
@@ -204,7 +204,7 @@ Frontend communicates with the backend API through `src/api/blockchain.api.js`.
 * Loading occurs on server startup.
 * Clearing deletes `blockchain.json` and resets the blockchain.
 
----
+
 
 ## Transaction Status
 
@@ -220,88 +220,81 @@ Frontend communicates with the backend API through `src/api/blockchain.api.js`.
 
 flowchart TD
 
-%% FRONTEND
 A[React Frontend] -->|HTTP Request| B[Express Routes]
 
-%% ROUTES
-B --> C1[GET api transactions]
-B --> C2[POST api transactions]
+B --> C1[GET transactions]
+B --> C2[POST transactions]
 
-C1 --> D1[getTransactions Controller]
-C2 --> D2[createTransaction Controller]
+C1 --> D1[getTransactions]
+C2 --> D2[createTransaction]
 
-%% GET FLOW
-D1 --> E1[Load from persistence]
-E1 --> F1[Read blockchain.json]
-F1 --> G1[Rehydrate Blocks]
-G1 --> H1[Rehydrate Transactions]
-H1 --> I1[Apply Filters]
-I1 --> J1[Return Data]
-J1 --> K1[sendSuccess Response]
-K1 --> A
+D1 --> E1[Load JSON]
+E1 --> F1[Rehydrate Blocks]
+F1 --> G1[Rehydrate Transactions]
+G1 --> H1[Apply Filters]
+H1 --> I1[Return Response]
 
-%% POST FLOW
-D2 --> E2[Load from persistence]
+D2 --> E2[Load JSON]
 E2 --> F2[Find or Create Block]
 F2 --> G2[Create Transaction]
 G2 --> H2[Add to Block]
-H2 --> I2[Save to persistence]
-I2 --> J2[Write blockchain.json]
-J2 --> K2[sendSuccess Response]
-K2 --> A
+H2 --> I2[Save JSON]
 
-%% BLOCKCHAIN STRUCTURE
 subgraph Blockchain_Model
-    L[Blockchain]
-    M[Block]
-    N[Transaction]
+    X[Blockchain]
+    Y[Block]
+    Z[Transaction]
 
-    L --> M
-    M --> N
+    X --> Y
+    Y --> Z
 end
 
-%% RELATIONSHIPS
-D2 --> N
-D2 --> M
-D1 --> N
+## How It Works
 
-What this diagram shows (quick explanation)
-* createTransaction flow
-Request comes from frontend
-Controller:
-Loads blockchain from file
-Finds or creates a block
-Creates a Transaction instance
-Adds it to the block
-Saves everything to blockchain.json
-* getTransactions flow
-Request with filters (query params)
-* Controller:
-Loads blockchain
-Rehydrates into Block + Transaction classes
-Applies filters:
-address
-amount
-date
-status
-Returns filtered transactions
-🧱 Core relationships
-Blockchain
-→ contains multiple Block
-Block
-→ contains multiple Transaction
-Transaction
-→ has:
-addresses
-amounts
-dates
-status
-txHash
-💾 Persistence role
-load() → used in both GET and POST
-save() → used in POST only
-clear() → used in DELETE endpoint
+### createTransaction
 
+1. Load blockchain from JSON  
+2. Find or create block  
+3. Create transaction  
+4. Add transaction to block  
+5. Save blockchain to disk  
+
+
+### getTransactions
+
+1. Load blockchain from JSON  
+2. Rehydrate objects (Block + Transaction instances)  
+3. Apply filters:
+   - address  
+   - amount  
+   - date  
+   - status  
+4. Return filtered results  
+
+
+## Core Structure
+
+### Blockchain
+→ contains **Blocks**
+
+### Block
+→ contains **Transactions**
+
+### Transaction
+Includes:
+- addresses  
+- amounts  
+- dates  
+- status  
+- txHash  
+
+
+
+## Persistence
+
+- `load()` → used in **GET** and **POST**  
+- `save()` → used in **POST**  
+- `clear()` → used in **DELETE**  
 
 ---
 
