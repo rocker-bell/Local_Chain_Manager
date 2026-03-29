@@ -71,4 +71,21 @@ class BlockChain {
             return true;
         }))
     }
+
+    createTransaction(blockId, txData) {
+        const tx = new Transaction(
+            Date.now(),
+            txData.fromAddress,
+            txData.toAddress,
+            txData.minAmount,
+            txData.maxAmount,
+            txData.startDate,
+            txData.endDate,
+            txData.Status,
+            txData.txHash
+        )
+
+        this.addTransactionToBlock(blockId, tx);
+        return tx;
+    }
 }
