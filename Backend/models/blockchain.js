@@ -1,4 +1,8 @@
-
+const STATUS = {
+    panding: "PENDING",
+    success: "CONFIRMED",
+    cancelled: "CANCELLED"
+}
 
 class Transaction {
     construcor(id, fromAddress, toAddress, minAmount, maxAmount, startDate, endDate, status) {
@@ -47,5 +51,24 @@ class BlockChain {
         }
 
         block.addTransaction(tx);
+    }
+
+    getTransactions(filters = {}) {
+        const {fromAddress, toAddress, minAmount, maxAmount, startDate, endDate, status} = filters;
+
+        return this.chain.map(block => block.transactions.filter(tx => {
+            if (fromAddress && tx.fromAddress !== fromAddress) return false;
+            if (toAddress && tx.Address !== toAddress) return false;
+
+            if(minAmount && tx.maxAmount < Number(minAmount)) return false;
+            if(maxAmount && tx.minAmount > Number(maxAmount)) return false;
+
+            if(startDate && tx.startDate < Number(startDate)) return false;
+            if(endDate && tx.endDate > Number(endDate)) return false;
+
+            if (status && tx.Status !== STATUS[status]) return false;
+
+            return true;
+        }))
     }
 }
