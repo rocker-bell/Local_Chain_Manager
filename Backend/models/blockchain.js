@@ -141,7 +141,7 @@ if (savedData) {
       tx.maxAmount,
       tx.startDate,
       tx.endDate,
-      tx.Status,
+      tx.status,
       tx.txHash
     ));
 

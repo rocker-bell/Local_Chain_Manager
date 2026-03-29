@@ -1,6 +1,6 @@
 import "../Styles/TransactionSearch.css"
 import {useState, useEffect} from "react";
-import { fetchTransactions } from "../api/blochchain.api";
+import { fetchTransactions } from "../api/blockchain.api";
 export default function TransactionSearch ({onResults}) {
      const [QuerryActive, setQerryActive] = useState(false);
     const [Loading, setLoading] = useState(false);

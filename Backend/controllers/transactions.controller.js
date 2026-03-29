@@ -42,7 +42,7 @@ export const getTransactions = (req, res) => {
     const blockchainChain = savedData.chain.map(b => {
       const block = new Block(b.id);
       block.transactions = b.transactions.map(tx => new Transaction(
-        tx.id, tx.fromAddress, tx.toAddress, tx.minAmount, tx.maxAmount, tx.startDate, tx.endDate, tx.Status
+        tx.id, tx.fromAddress, tx.toAddress, tx.minAmount, tx.maxAmount, tx.startDate, tx.endDate, tx.status
       ));
       return block;
     });
@@ -61,7 +61,7 @@ export const getTransactions = (req, res) => {
         if (filters.maxAmount && tx.maxAmount > Number(filters.maxAmount)) return false;
         if (filters.startDate && new Date(tx.startDate) < new Date(filters.startDate)) return false;
         if (filters.endDate && new Date(tx.endDate) > new Date(filters.endDate)) return false;
-        if (filters.status && tx.Status !== filters.status) return false;
+        if (filters.status && tx.status !== filters.status) return false;
         return true;
       })
     );
@@ -75,7 +75,7 @@ export const getTransactions = (req, res) => {
 
 export const createTransaction = (req, res) => {
   try {
-    const { blockId, fromAddress, toAddress, minAmount, maxAmount, startDate, endDate, Status, network } = req.body;
+    const { blockId, fromAddress, toAddress, minAmount, maxAmount, startDate, endDate, status, network } = req.body;
 
     // 1️⃣ Load blockchain
     const savedData = persistenceService.load() || { chain: [] };
@@ -103,7 +103,7 @@ export const createTransaction = (req, res) => {
       maxAmount,
       startDate,
       endDate,
-      Status
+      status
     );
 
     blockData.transactions.push(tx);

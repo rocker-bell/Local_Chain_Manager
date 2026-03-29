@@ -32,7 +32,7 @@
 import { validateQueryParams, validateBody } from '../middleware/validation.js';
 
 import express from 'express';
-import { getTransactions, createTransaction} from '../controllers/transactions.controller.js';
+import { getTransactions, createTransaction, clearBlockchain} from '../controllers/transactions.controller.js';
 
 const router = express.Router();
 
