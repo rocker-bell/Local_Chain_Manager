@@ -5,7 +5,7 @@ const STATUS = {
 }
 
 class Transaction {
-    construcor(id, fromAddress, toAddress, minAmount, maxAmount, startDate, endDate, status) {
+    constructor(id, fromAddress, toAddress, minAmount, maxAmount, startDate, endDate, status) {
         this.id = id;
         this.fromAddress = fromAddress;
         this.toAddress = toAddress;
@@ -26,7 +26,7 @@ class Transaction {
 class Block {
     constructor(id) {
         this.id = id;
-        this.transaction = []
+        this.transactions = []
     }
 
     addTransaction(tx) {
@@ -58,7 +58,7 @@ class BlockChain {
 
         return this.chain.map(block => block.transactions.filter(tx => {
             if (fromAddress && tx.fromAddress !== fromAddress) return false;
-            if (toAddress && tx.Address !== toAddress) return false;
+            if (toAddress && tx.toAddress !== toAddress) return false;
 
             if(minAmount && tx.maxAmount < Number(minAmount)) return false;
             if(maxAmount && tx.minAmount > Number(maxAmount)) return false;
@@ -69,7 +69,8 @@ class BlockChain {
             if (status && tx.Status !== STATUS[status]) return false;
 
             return true;
-        }))
+        })
+    ).flat();
     }
 
     createTransaction(blockId, txData) {
@@ -81,7 +82,7 @@ class BlockChain {
             txData.maxAmount,
             txData.startDate,
             txData.endDate,
-            txData.Status,
+            txData.status,
             txData.txHash
         )
 
@@ -90,7 +91,7 @@ class BlockChain {
     }
 }
 
-blockchain = new BlockChain();
+const blockchain = new BlockChain();
 const block1 = new Block(1);
 
 const tx1 = new Transaction(

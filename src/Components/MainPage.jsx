@@ -1,7 +1,10 @@
 import "../Styles/MainPage.css";
 import TransactionSearch from "./TransactionSearch.jsx";
 import SearchResults from "./SearchResults.jsx";
+import { useState } from "react";
 const MainPage = () => {
+    const [filters, setFilters] = useState();
+    const [activeResults, setActiveResults] = useState();
     return (
         <>
             <div className="dashboard-container">
