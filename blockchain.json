@@ -1,0 +1,31 @@
+{
+  "chain": [
+    {
+      "id": 1,
+      "transactions": [
+        {
+          "id": 1,
+          "fromAddress": "Alice",
+          "toAddress": "Bob",
+          "minAmount": 10,
+          "maxAmount": 100,
+          "startDate": "2026-01-01",
+          "endDate": "2026-12-31",
+          "status": "PENDING",
+          "txHash": null
+        },
+        {
+          "id": 1774789133594,
+          "fromAddress": "Charlie",
+          "toAddress": "Dave",
+          "minAmount": 20,
+          "maxAmount": 200,
+          "startDate": "2026-01-01",
+          "endDate": "2026-12-31",
+          "status": "PENDING",
+          "txHash": null
+        }
+      ]
+    }
+  ]
+}

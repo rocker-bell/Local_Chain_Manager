@@ -1,4 +1,4 @@
-import { persistenceService } from "../services/persistence.service";
+import { persistenceService } from "../services/persistence.service.js";
 
 const STATUS = {
     pending: "PENDING",
@@ -35,7 +35,7 @@ class Block {
 }
 
 
-class BlockChain {
+class Blockchain {
     constructor() {
         this.chain = [];
     }
@@ -176,4 +176,4 @@ if (savedData) {
 }
 
 
-export {BlockChain, blockchain, Block, Transaction, STATUS};
+export {Blockchain, blockchain, Block, Transaction, STATUS};
