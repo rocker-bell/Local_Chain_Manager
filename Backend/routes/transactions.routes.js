@@ -29,6 +29,8 @@
 
 // // model2
 
+import { validateQueryParams, validateBody } from '../middleware/validation.js';
+
 import express from 'express';
 import { getTransactions, createTransaction} from '../controllers/transactions.controller.js';
 
