@@ -59,7 +59,10 @@ class BlockChain {
             if (toAddress && tx.toAddress !== toAddress) return false;
 
             if(minAmount && tx.maxAmount < Number(minAmount)) return false;
-            if(maxAmount && tx.minAmount > Number(maxAmount)) return false;
+if(maxAmount && tx.minAmount > Number(maxAmount)) return false;
+
+            // if(minAmount && tx.maxAmount < Number(minAmount)) return false;
+            // if(maxAmount && tx.minAmount > Number(maxAmount)) return false;
 
             // if(startDate && tx.startDate < Number(startDate)) return false;
             // if(endDate && tx.endDate > Number(endDate)) return false;
@@ -101,7 +104,8 @@ const tx1 = new Transaction(
     10,
     100,
     "2026-03-29",
-    "2026-04-01"
+    "2026-04-01",
+    STATUS.pending
 );
 
 block1.addTransaction(tx1);
