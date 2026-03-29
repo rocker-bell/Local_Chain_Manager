@@ -1,4 +1,4 @@
-
+import { persistenceService } from "../services/persistence.service";
 
 const STATUS = {
     pending: "PENDING",
@@ -43,6 +43,8 @@ class BlockChain {
     addBlock(block) {
         this.chain.push(block);
 
+        persistenceService.save(this);
+
 
     }
 
@@ -53,6 +55,8 @@ class BlockChain {
         }
 
         block.addTransaction(tx);
+
+        persistenceService.save(this);
     }
 
     getTransactions(filters = {}) {
@@ -98,21 +102,78 @@ if(maxAmount && tx.minAmount > Number(maxAmount)) return false;
     }
 }
 
-const blockchain = new BlockChain();
-const block1 = new Block(1);
+// load from this
 
-const tx1 = new Transaction(
+
+const savedData = persistenceService.load();
+
+// const blockchain = new BlockChain();
+// const block1 = new Block(1);
+
+// const tx1 = new Transaction(
+//     1,
+//     "Alice",
+//     "Bob",
+//     10,
+//     100,
+//     "2026-03-29",
+//     "2026-04-01",
+//     STATUS.pending
+// );
+
+// block1.addTransaction(tx1);
+// blockchain.addBlock(block1);
+
+
+let blockchain;
+
+if (savedData) {
+  blockchain = new Blockchain();
+
+  blockchain.chain = savedData.chain.map(b => {
+    const block = new Block(b.id);
+
+    block.transactions = b.transactions.map(tx => new Transaction(
+      tx.id,
+      tx.fromAddress,
+      tx.toAddress,
+      tx.minAmount,
+      tx.maxAmount,
+      tx.startDate,
+      tx.endDate,
+      tx.Status,
+      tx.txHash
+    ));
+
+    return block;
+  });
+
+  console.log('[Blockchain] Loaded from persistence.');
+} else {
+
+    // new Instance created if no savedData
+ 
+  blockchain = new Blockchain();
+
+  
+  const tx1 = new Transaction(
     1,
     "Alice",
     "Bob",
     10,
     100,
-    "2026-03-29",
-    "2026-04-01",
-    STATUS.pending
-);
+    "2026-01-01",
+    "2026-12-31"
+  );
 
-block1.addTransaction(tx1);
-blockchain.addBlock(block1);
+  const block1 = new Block(1);
+  block1.addTransaction(tx1);
+
+  blockchain.addBlock(block1); 
+
+  console.log('[Blockchain] New instance created with default data.');
+
+}
+
 
 export {BlockChain, blockchain, Block, Transaction, STATUS};
