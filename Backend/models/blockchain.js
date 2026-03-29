@@ -89,3 +89,21 @@ class BlockChain {
         return tx;
     }
 }
+
+blockchain = new BlockChain();
+const block1 = new Block(1);
+
+const tx1 = new Transaction(
+    1,
+    "Alice",
+    "Bob",
+    10,
+    100,
+    "2026-03-29",
+    "2026-04-01"
+);
+
+block1.addTransaction(tx1);
+blockchain.addBlock(block1);
+
+export {BlockChain, blockchain, Block, Transaction, STATUS};
