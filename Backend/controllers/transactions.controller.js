@@ -117,3 +117,13 @@ export const createTransaction = (req, res) => {
     return sendError(res, 'Failed to create transaction');
   }
 };
+
+export const clearBlockchain = (req, res) => {
+  try {
+    persistenceService.clear();
+    return sendSuccess(res, [], 'Blockchain cleared successfully');
+  } catch (err) {
+    console.error(err);
+    return sendError(res, 'Failed to clear blockchain');
+  }
+};

@@ -34,8 +34,16 @@ import { getTransactions, createTransaction} from '../controllers/transactions.c
 
 const router = express.Router();
 
-router.get('/', getTransactions);        // GET /api/transactions
-router.post('/', createTransaction);     // POST /api/transactions
-// router.delete('/', clearBlockchain);     // DELETE /api/transactions
+router.get('/', 
+    validateQueryParams(['fromAddress', 'toAddress', 'minAmount', 'maxAmount', 'startDate', 'endDate', 'status']),
+    getTransactions
+
+);       
+router.post('/', 
+    validateBody(['blockId', 'fromAddress', 'toAddress', 'minAmount', 'maxAmount', 'startDate', 'endDate', 'Status']),
+    createTransaction
+);    
+
+router.delete('/', clearBlockchain); 
 
 export default router;
